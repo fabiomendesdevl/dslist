@@ -5,32 +5,36 @@ import jakarta.persistence.*;
 import java.util.Objects;
 
 @Entity   //equivalente a uma tabela do banco relacional
-@Table(name = "tb_jogo") // nome da tabela do banco
-
-public class Jogo {
+@Table(name = "tb_game") // nome da tabela do banco
+public class Game {
 
     //ORM: MAPEAMENTO OBJETO RELACIONAL
-
-    @Id  //chave primaria
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     // auto increment, a frente e uma forma de como o banco vai gerar o id
-    private long id;
+    //caso queira customizar coluna no banco usasse @Column (name = "nomedacoluna" que a gente vai customizar sempre abaixo)
+    //chave primaria
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
     private Integer ano;
     private String genero;
     private String plataforma;
     private Double pontuacao;
-    //caso queira customizar coluna no banco usasse @Column (name = "nomedacoluna" que a gente vai customizar sempre abaixo)
     private String imgUrl;
-    private String pequenaDescricao;
-    private String longaDescricacao;
 
-    public Jogo() {
+    @Column(columnDefinition = "TEXT")
+    private String pequenaDescricao;
+
+    @Column(columnDefinition = "TEXT")
+    private String longaDescricao;
+
+    public Game() {
     }
 
 
     //opcional
 
-    public Jogo(long id, Integer ano, String genero, String plataforma, Double pontuacao, String imgUrl, String pequenaDescricao, String longaDescricacao) {
+
+    public Game(Long id, Integer ano, String genero, String plataforma, Double pontuacao, String imgUrl, String pequenaDescricao, String longaDescricacao) {
         this.id = id;
         this.ano = ano;
         this.genero = genero;
@@ -38,14 +42,14 @@ public class Jogo {
         this.pontuacao = pontuacao;
         this.imgUrl = imgUrl;
         this.pequenaDescricao = pequenaDescricao;
-        this.longaDescricacao = longaDescricacao;
+        this.longaDescricao = longaDescricao;
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -97,20 +101,20 @@ public class Jogo {
         this.pequenaDescricao = pequenaDescricao;
     }
 
-    public String getLongaDescricacao() {
-        return longaDescricacao;
+    public String getLongaDescricao() {
+        return longaDescricao;
     }
 
-    public void setLongaDescricacao(String longaDescricacao) {
-        this.longaDescricacao = longaDescricacao;
+    public void setLongaDescricao(String longaDescricao) {
+        this.longaDescricao = longaDescricao;
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Jogo jogo = (Jogo) o;
-        return id == jogo.id;
+        Game game = (Game) o;
+        return Objects.equals(id, game.id);
     }
 
     @Override
